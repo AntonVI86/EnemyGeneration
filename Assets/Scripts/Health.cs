@@ -8,8 +8,8 @@ public class Health : MonoBehaviour
 {
     [SerializeField] private Slider _healthValue;
     [SerializeField] private float _maxHealth;
-    [SerializeField] private UnityEvent _damaged;
     [SerializeField] private ParticleSystem _hitEffect;
+    [SerializeField] private UnityEvent _damaged;
 
     private float _currentHealth;
     private float _speed = 1;

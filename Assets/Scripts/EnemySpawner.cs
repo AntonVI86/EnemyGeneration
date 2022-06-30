@@ -1,20 +1,23 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class EnemySpawner : ObjectPool
 {
-    [SerializeField] private GameObject[] _templates;
     [SerializeField] private float _secondsBetweenSpawn;
-    [SerializeField] private Transform _spawn;
-    private Transform[] _points;
+    [SerializeField] private Transform _containerOfSpawnPoints;
+    [SerializeField] private Transform _target;
+    [SerializeField] private Enemy[] _templates;
+
+    private Transform[] _spawnPoints;
     private float _elapsedTime;
 
     private void Awake()
     {
-        _points = new Transform[_spawn.childCount];
+        _spawnPoints = new Transform[_containerOfSpawnPoints.childCount];
 
-        for (int i = 0; i < _spawn.childCount; i++)
+        for (int i = 0; i < _containerOfSpawnPoints.childCount; i++)
         {
-            _points[i] = _spawn.GetChild(i);
+            _spawnPoints[i] = _containerOfSpawnPoints.GetChild(i);
         }
 
         Initialize(_templates);
@@ -26,19 +29,32 @@ public class EnemySpawner : ObjectPool
 
         if (_elapsedTime >= _secondsBetweenSpawn) 
         {
-            if (TryGetObject(out GameObject enemy)) 
-            {
-                int spawnPointNumber = Random.Range(0, _points.Length);
-
-                SetEnemy(enemy, _points[spawnPointNumber]);
-                _elapsedTime = 0;           
-            }
+            StartCoroutine(CreateEnemy());
         }
+    }
+
+    public Transform Init()
+    {
+        return _target.transform;
     }
 
     private void SetEnemy(GameObject enemy, Transform spawnPoint) 
     {
         enemy.SetActive(true);
         enemy.transform.position = spawnPoint.position;
+    }
+
+    private IEnumerator CreateEnemy() 
+    {
+        if (TryGetObject(out GameObject enemy)) 
+        {
+            int spawnPointNumber = Random.Range(0, _spawnPoints.Length);
+
+            SetEnemy(enemy, _spawnPoints[spawnPointNumber]);
+            _elapsedTime = 0;
+        }
+        
+        yield return new WaitForSeconds(_secondsBetweenSpawn);
+
     }
 }

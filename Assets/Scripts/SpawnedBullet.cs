@@ -3,11 +3,11 @@ using UnityEngine.Events;
 
 public class SpawnedBullet : ObjectPool
 {
-    [SerializeField] private GameObject _bullet;
+    [SerializeField] private Bullet _bullet;
     [SerializeField] private Transform _tower;
     [SerializeField] private AudioSource _audioSource;
-    [SerializeField] private UnityEvent _playedShot;
     [SerializeField] private AudioClip[] _clip;
+    [SerializeField] private UnityEvent _playedShot;
 
     private void Start()
     {

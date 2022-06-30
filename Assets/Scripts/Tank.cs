@@ -5,8 +5,8 @@ public class Tank : MonoBehaviour
 {
     [SerializeField] private float _speed;
     [SerializeField] private UnityEvent _fired;
-    private Vector2 _currentDirection;
 
+    private Vector2 _currentDirection;
     private Transform _tower;
 
     private void Awake()
