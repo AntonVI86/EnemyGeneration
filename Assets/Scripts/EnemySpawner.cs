@@ -33,7 +33,7 @@ public class EnemySpawner : ObjectPool
         }
     }
 
-    public Transform Init()
+    public Transform SetTargetPosition()
     {
         return _target.transform;
     }
