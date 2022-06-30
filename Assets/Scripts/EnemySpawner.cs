@@ -55,6 +55,5 @@ public class EnemySpawner : ObjectPool
         }
         
         yield return new WaitForSeconds(_secondsBetweenSpawn);
-
     }
 }
