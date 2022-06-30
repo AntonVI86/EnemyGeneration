@@ -12,6 +12,7 @@ public class Health : MonoBehaviour
     [SerializeField] private UnityEvent _damaged;
 
     private float _currentHealth;
+    private float _healthFillSpeed = 0.02f;
     private float _speed = 1;
     private bool isAlive => _currentHealth > 0;
 
@@ -42,7 +43,7 @@ public class Health : MonoBehaviour
         while (_healthValue.value != _currentHealth)
         {
             _healthValue.value = Mathf.MoveTowards(_healthValue.value, _currentHealth, _speed);
-            yield return new WaitForSeconds(0.02f);
+            yield return new WaitForSeconds(_healthFillSpeed);
         }
     }
 }
