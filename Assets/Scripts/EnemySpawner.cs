@@ -9,7 +9,6 @@ public class EnemySpawner : ObjectPool
     [SerializeField] private Enemy[] _templates;
 
     private Transform[] _spawnPoints;
-    private float _elapsedTime;
 
     private void Awake()
     {
@@ -38,19 +37,18 @@ public class EnemySpawner : ObjectPool
 
     private IEnumerator CreateEnemy() 
     {
+        var delay = new WaitForSeconds(_secondsBetweenSpawn);
+
         while (true) 
         {
-            _elapsedTime += Time.deltaTime;
-
-            if (_elapsedTime >= _secondsBetweenSpawn && TryGetObject(out GameObject enemy))
+            if (TryGetObject(out GameObject enemy))
             {
                 int spawnPointNumber = Random.Range(0, _spawnPoints.Length);
 
                 SetEnemy(enemy, _spawnPoints[spawnPointNumber]);
-                _elapsedTime = 0;
             }
-
-            yield return null;
+            
+            yield return delay;
         }
     }
 }
