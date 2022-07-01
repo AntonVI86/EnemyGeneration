@@ -16,7 +16,7 @@ public class Enemy : MonoBehaviour
 
     private void Turn() 
     {
-        player = GetComponentInParent<EnemySpawner>().SetTargetPosition();
+        player = GetComponentInParent<EnemySpawner>().GetTargetPosition();
         var angleX = transform.rotation.eulerAngles.x;
         var angleY = transform.rotation.eulerAngles.y;
         var angleZ = Mathf.Atan2(player.position.y - transform.position.y, player.position.x - transform.position.x) * Mathf.Rad2Deg + 90;

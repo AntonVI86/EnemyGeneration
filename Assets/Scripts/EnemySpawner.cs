@@ -21,19 +21,11 @@ public class EnemySpawner : ObjectPool
         }
 
         Initialize(_templates);
+
+        StartCoroutine(CreateEnemy());
     }
 
-    private void Update()
-    {
-        _elapsedTime += Time.deltaTime;
-
-        if (_elapsedTime >= _secondsBetweenSpawn) 
-        {
-            StartCoroutine(CreateEnemy());
-        }
-    }
-
-    public Transform SetTargetPosition()
+    public Transform GetTargetPosition()
     {
         return _target.transform;
     }
@@ -46,14 +38,19 @@ public class EnemySpawner : ObjectPool
 
     private IEnumerator CreateEnemy() 
     {
-        if (TryGetObject(out GameObject enemy)) 
+        while (true) 
         {
-            int spawnPointNumber = Random.Range(0, _spawnPoints.Length);
+            _elapsedTime += Time.deltaTime;
 
-            SetEnemy(enemy, _spawnPoints[spawnPointNumber]);
-            _elapsedTime = 0;
+            if (_elapsedTime >= _secondsBetweenSpawn && TryGetObject(out GameObject enemy))
+            {
+                int spawnPointNumber = Random.Range(0, _spawnPoints.Length);
+
+                SetEnemy(enemy, _spawnPoints[spawnPointNumber]);
+                _elapsedTime = 0;
+            }
+
+            yield return null;
         }
-        
-        yield return new WaitForSeconds(_secondsBetweenSpawn);
     }
 }

@@ -40,10 +40,12 @@ public class Health : MonoBehaviour
 
     private IEnumerator ChangeHealth() 
     {
+        var delay = new WaitForSeconds(_healthFillSpeed);
+
         while (_healthValue.value != _currentHealth)
         {
             _healthValue.value = Mathf.MoveTowards(_healthValue.value, _currentHealth, _speed);
-            yield return new WaitForSeconds(_healthFillSpeed);
+            yield return delay;
         }
     }
 }

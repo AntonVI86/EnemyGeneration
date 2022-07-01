@@ -16,7 +16,7 @@ public class Tank : MonoBehaviour
 
     private void Update()
     {
-        TowerControl();
+        TurnTower();
 
         if (Input.GetMouseButtonDown(0)) 
         {
@@ -24,7 +24,7 @@ public class Tank : MonoBehaviour
         }
     }
 
-    private void TowerControl() 
+    private void TurnTower() 
     {
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 targetPosition = _tower.position;
